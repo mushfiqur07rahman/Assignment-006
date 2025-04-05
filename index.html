@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English জানালা</title>
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+
+    <!-- Daisy UI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Font Awesome CDN -->
+    <script src="https://kit.fontawesome.com/c0f5fa18d6.js" crossorigin="anonymous"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tiro+Bangla:ital@0;1&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <style>
+        .poppins {
+            font-family: "Poppins", sans-serif;
+        }
+
+        .bangla-main {
+            font-family: "Hind Siliguri", sans-serif;
+        }
+
+        .bangla-logo {
+            font-family: "Tiro Bangla", serif;
+        }
+    </style>
+
+    <!-- SweetAlert2 CDN (CSS) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 CDN (JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+
+</head>
+
+<body class="poppins">
+    <!-- Header Section -->
+    <section id="header-section" class="hidden">
+        <nav
+            class="bg-gradient-to-r from-[rgba(255,255,255,0.3)] to-[rgba(0,0,0,0)] backdrop-blur-lg border-b border-[#C6BDBD] flex justify-between py-7 px-24 fixed top-0 w-full z-50">
+            <!-- Logo Container -->
+            <div>
+                <h1 class="font-semibold text-xl flex items-center">English <img src="./assets/logo.png" alt=""><span
+                        class="bangla-logo">জানালা</span></h1>
+            </div>
+            <!-- Navigation Buttons Container -->
+            <div class="flex gap-3">
+                <button id="scrollToFAQ" class="btn btn-outline btn-primary "><i
+                        class="fa-solid fa-circle-question"></i> FAQ</button>
+                <button id="scrollToLearn" class="btn btn-outline btn-primary"><i class="fa-solid fa-book-open"></i>
+                    Learn</button>
+                <button id="log-out" class="btn btn-outline btn-primary"><i class="fa-solid fa-right-from-bracket"></i>
+                    Logout</button>
+            </div>
+        </nav>
+    </section>
+
+    <!-- Banner Section -->
+    <section id="banner-section" class="px-[100px] flex items-center min-h-screen justify-between">
+        <!-- Section Main Container -->
+        <div class="flex flex-col gap-6">
+            <h1 class="text-5xl font-bold"><span class="text-[#00BCFF]">English</span> is Easy!!</h1>
+            <p class="bangla-main text-2xl font-medium text-[#18181B]">আজ থেকেই আপনার ভাষা শেখার যাত্রা শুরু করুন। আপনি
+                যদি নতুন হন অথবা <br> আপনার দক্ষতা বাড়াতে চান, আমাদের Interactive Lessons আপনাকে নিয়ে <br> যাবে অন্য
+                একটি Level এ</p>
+            <!-- Input Field Container -->
+            <div class="flex flex-col gap-5 max-w-[350px]">
+                <input type="text" name="user" id="name-input" placeholder="Enter Your Name" required
+                    class="p-5 rounded-xl border-2 border-[#18181B]/20">
+                <input type="password" id="pass-input" placeholder="Enter Your password" required
+                    class="p-5 rounded-xl border-2 border-[#18181B]/20">
+            </div>
+            <button id="login-btn" class="btn btn-primary w-40">Get Started</button>
+        </div>
+        <!-- Hero Image -->
+        <img src="./assets/hero-student.png" alt="">
+    </section>
+
+    <!-- Learn Section -->
+    <section id="learn-section" class="hidden px-[100px] min-h-screen pt-20 flex-col items-center justify-center">
+        <div>
+            <h1 class="text-4xl font-bold py-9"><span class="text-[#00BCFF]">Let's</span> Learn Vocabularies</h1>
+        </div>
+        <!-- Lesson Button Container -->
+        <div id="lesson-btn-container" class="mb-10 flex gap-5 justify-center">
+        </div>
+        <!-- Lessons Container -->
+        <div class="py-16 w-full bg-[#F8F8F8] rounded-xl">
+            <div id="guidance-message">
+                <p class="bangla-main text-sm text-center pb-3">আপনি এখনো কোন Lesson Select করেন নি।</p>
+                <h2 class="bangla-main text-4xl font-medium text-center">একটি Lesson Select করুন।</h2>
+            </div>
+            <!-- Lesson Card Container -->
+            <div class="py-7 w-full bg-[#F8F8F8] rounded-xl flex flex-col items-center">
+                <span id="loader" class="loading loading-dots hidden"></span>
+                <!-- Dynamic Cards Container-->
+                <div id="word-container" class="p-7 grid grid-cols-3 gap-7 max-h-[1000px] overflow-y-auto">
+                    <!-- Cards -->
+
+                    <!-- Cards End -->
+                    <div id="modal-container"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq-section" class="hidden px-[100px] min-h-screen pt-20 items-center justify-center">
+        <div>
+            <h1 class="font-bold text-4xl text-center"><span class="text-[#00BCFF]">Frequently</span> Asked Questions
+            </h1>
+            <!-- Accordion Container -->
+            <div class="flex flex-col gap-4">
+                <div class="collapse collapse-plus bg-[#F8F8F8] border border-base-300 rounded-xl">
+                    <input type="radio" name="my-accordion-3" checked="checked" />
+                    <div class="collapse-title font-semibold">1. The difference between var, let, and const.</div>
+                    <div class="collapse-content text-sm">`var` can be redeclared and used before it's defined, which
+                        can cause issues. `let` allows changes but cannot be redeclared, and `const` cannot be changed
+                        or redeclared after it's assigned.</div>
+                </div>
+                <div class="collapse collapse-plus bg-[#F8F8F8] border border-base-300 rounded-xl">
+                    <input type="radio" name="my-accordion-3" checked="checked" />
+                    <div class="collapse-title font-semibold">2. The difference between map(), forEach(), and filter().
+                    </div>
+                    <div class="collapse-content text-sm">`map()` creates a new array by applying a function to each
+                        element, `forEach()` simply loops through each element without returning anything, and
+                        `filter()` creates a new array by selecting elements that meet a condition.</div>
+                </div>
+                <div class="collapse collapse-plus bg-[#F8F8F8] border border-base-300 rounded-xl">
+                    <input type="radio" name="my-accordion-3" checked="checked" />
+                    <div class="collapse-title font-semibold">3. Explain arrow functions and how they are different from
+                        regular functions.</div>
+                    <div class="collapse-content text-sm">Arrow functions provide a shorter syntax and don't have their
+                        own `this` value, unlike regular functions that do. Regular functions can also be used as
+                        methods with a `this` context, while arrow functions can't.</div>
+                </div>
+                <div class="collapse collapse-plus bg-[#F8F8F8] border border-base-300 rounded-xl">
+                    <input type="radio" name="my-accordion-3" checked="checked" />
+                    <div class="collapse-title font-semibold">4. How JavaScript Promises work?</div>
+                    <div class="collapse-content text-sm">JavaScript Promises represent a value that may not be
+                        available yet, allowing asynchronous code to run without blocking. They can be in one of three
+                        states: pending, resolved, or rejected, and handle results with `.then()` for success or
+                        `.catch()` for errors.</div>
+                </div>
+                <div class="collapse collapse-plus bg-[#F8F8F8] border border-base-300 rounded-xl">
+                    <input type="radio" name="my-accordion-3" checked="checked" />
+                    <div class="collapse-title font-semibold">5. How closures work in JavaScript?</div>
+                    <div class="collapse-content text-sm">Closures allow a function to remember and access variables
+                        from its outer scope even after the outer function has finished executing. This happens because
+                        the inner function maintains a reference to the outer function's variables.</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <section id="footer-section" class="hidden px-[100px] py-[120px] border-t-2 border-[#FFEBEB]">
+        <footer class="flex justify-between items-end ">
+            <!-- footer content -->
+            <div>
+                <div>
+                    <h1 class="font-semibold text-xl flex items-center">English <img src="./assets/logo.png"
+                            alt=""><span class="bangla-logo">জানালা</span></h1>
+                </div>
+                <h3 class="bangla-main font-medium text-xl mt-5 mb-2">ইংরেজি শিখুন সহজে</h3>
+                <p>Providing ED-Tech Applications since 2025</p>
+            </div>
+            <!-- Follow Links -->
+            <div>
+                <p class="text-xl font-semibold text-[#18181B] pb-4">Follow Us</p>
+                <div class="flex gap-5">
+                    <a href="https://www.facebook.com/mushfiqur07rahman"><i
+                            class="fa-brands fa-facebook fa-2x hover:text-blue-700"></i></a>
+                    <a href="https://www.youtube.com/channel/UC1-IGN3s5ya25yNDZLJ2e5w"><i
+                            class="fa-brands fa-youtube fa-2x hover:text-red-600"></i></a>
+                    <a href="https://www.instagram.com/"><i
+                            class="fa-brands fa-instagram fa-2x hover:text-purple-700"></i></a>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- Modal -->
+    <div id="modal-container">
+        <dialog id="descriptionModal" class="modal">
+            <div class="modal-box flex flex-col gap-8">
+                <h1 class="text-4xl font-semibold">
+                    <span id="main-word">'word'</span>
+                    ( <i class="fa-solid fa-microphone-lines"></i> :
+                    <span id="word-pronunciation" class="bangla-main">'ইগার'</span>)
+                </h1>
+                <div>
+                    <p class="text-2xl font-semibold mb-3">Meaning</p>
+                    <p id="meaning" class="text-2xl font-medium bangla-main">'meaning'</p>
+                </div>
+                <div>
+                    <p class="text-2xl font-semibold mb-3">Example</p>
+                    <p id="example" class="text-2xl font-medium">'example'</p>
+                </div>
+                <div>
+                    <p class="text-2xl font-medium bangla-main mb-3">সমার্থক শব্দ গুলো</p>
+                    <div id="synonymContainer" class="flex gap-2 flex-wrap">
+                    </div>
+                </div>
+                <div class="modal-action justify-start">
+                    <form method="dialog">
+                        <button class="btn btn-primary">Completed Learning</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
+    </div>
+
+
+    <!-- Scripts -->
+    <script src="./scripts/landing.js"></script>
+    <script src="./scripts/navigation.js"></script>
+    <script src="./scripts/lessons-function.js"></script>
+</body>
+
+</html>
